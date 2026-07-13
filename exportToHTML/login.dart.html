@@ -1,0 +1,176 @@
+<html>
+<head>
+<title>login.dart</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #a9b7c6;}
+.s1 { color: #6a8759;}
+.s2 { color: #cc7832;}
+.s3 { color: #808080;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+login.dart</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">'package:flutter/material.dart'</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">'today_screen.dart'</span><span class="s2">;</span>
+
+<span class="s2">class </span><span class="s0">LoginPage </span><span class="s2">extends </span><span class="s0">StatefulWidget {</span>
+  <span class="s2">final </span><span class="s0">String userType</span><span class="s2">;</span>
+
+  <span class="s0">LoginPage({required </span><span class="s2">this</span><span class="s0">.userType})</span><span class="s2">;</span>
+
+  <span class="s0">@override</span>
+  <span class="s0">_LoginPageState createState() =&gt; _LoginPageState()</span><span class="s2">;</span>
+<span class="s0">}</span>
+
+<span class="s2">class </span><span class="s0">_LoginPageState </span><span class="s2">extends </span><span class="s0">State&lt;LoginPage&gt; {</span>
+  <span class="s2">final </span><span class="s0">TextEditingController idController = TextEditingController()</span><span class="s2">;</span>
+  <span class="s2">final </span><span class="s0">TextEditingController passwordController = TextEditingController()</span><span class="s2">;</span>
+
+  <span class="s0">@override</span>
+  <span class="s2">void </span><span class="s0">dispose() {</span>
+    <span class="s0">idController.dispose()</span><span class="s2">;</span>
+    <span class="s0">passwordController.dispose()</span><span class="s2">;</span>
+    <span class="s2">super</span><span class="s0">.dispose()</span><span class="s2">;</span>
+  <span class="s0">}</span>
+
+  <span class="s0">@override</span>
+  <span class="s0">Widget build(BuildContext context) {</span>
+    <span class="s2">final </span><span class="s0">screenHeight = MediaQuery.of(context).size.height</span><span class="s2">;</span>
+
+    <span class="s2">return </span><span class="s0">Scaffold(</span>
+      <span class="s0">backgroundColor: Colors.white</span><span class="s2">,</span>
+      <span class="s0">body: SingleChildScrollView(</span>
+        <span class="s0">child: Column(</span>
+          <span class="s0">children: [</span>
+            <span class="s3">// Circular Image at the top</span>
+            <span class="s0">Container(</span>
+              <span class="s0">height: screenHeight * </span><span class="s4">0.4</span><span class="s2">,</span>
+              <span class="s0">width: double.infinity</span><span class="s2">,</span>
+              <span class="s0">decoration: </span><span class="s2">const </span><span class="s0">BoxDecoration(</span>
+                <span class="s0">color: Color(</span><span class="s4">0xFFEAD8C9</span><span class="s0">)</span><span class="s2">,</span>
+                <span class="s0">borderRadius: BorderRadius.only(</span>
+                  <span class="s0">bottomLeft: Radius.circular(</span><span class="s4">40</span><span class="s0">)</span><span class="s2">,</span>
+                  <span class="s0">bottomRight: Radius.circular(</span><span class="s4">40</span><span class="s0">)</span><span class="s2">,</span>
+
+                <span class="s0">)</span><span class="s2">,</span>
+              <span class="s0">)</span><span class="s2">,</span>
+              <span class="s0">child: Center(</span>
+                <span class="s0">child: ClipOval(</span>
+                  <span class="s0">child: Image.asset(</span>
+                    <span class="s1">'assets/images/1.png'</span><span class="s2">, </span><span class="s3">// Path to your image</span>
+                    <span class="s0">width: </span><span class="s4">150</span><span class="s2">,</span>
+                    <span class="s0">height: </span><span class="s4">150</span><span class="s2">,</span>
+                    <span class="s0">fit: BoxFit.cover</span><span class="s2">,</span>
+                  <span class="s0">)</span><span class="s2">,</span>
+                <span class="s0">)</span><span class="s2">,</span>
+              <span class="s0">)</span><span class="s2">,</span>
+            <span class="s0">)</span><span class="s2">,</span>
+            <span class="s0">Padding(</span>
+              <span class="s0">padding: </span><span class="s2">const </span><span class="s0">EdgeInsets.all(</span><span class="s4">16.0</span><span class="s0">)</span><span class="s2">,</span>
+              <span class="s0">child: Column(</span>
+                <span class="s0">crossAxisAlignment: CrossAxisAlignment.start</span><span class="s2">,</span>
+                <span class="s0">children: [</span>
+                  <span class="s2">const </span><span class="s0">SizedBox(height: </span><span class="s4">20</span><span class="s0">)</span><span class="s2">,</span>
+                  <span class="s2">const </span><span class="s0">Text(</span>
+                    <span class="s1">'Employee ID'</span><span class="s2">,</span>
+                    <span class="s0">style: TextStyle(fontSize: </span><span class="s4">18</span><span class="s2">, </span><span class="s0">fontWeight: FontWeight.bold)</span><span class="s2">,</span>
+                  <span class="s0">)</span><span class="s2">,</span>
+                  <span class="s2">const </span><span class="s0">SizedBox(height: </span><span class="s4">10</span><span class="s0">)</span><span class="s2">,</span>
+                  <span class="s0">TextField(</span>
+                    <span class="s0">controller: idController</span><span class="s2">,</span>
+                    <span class="s0">decoration: InputDecoration(</span>
+                      <span class="s0">hintText: </span><span class="s1">'Enter your employee id'</span><span class="s2">,</span>
+                      <span class="s0">prefixIcon: </span><span class="s2">const </span><span class="s0">Icon(Icons.person)</span><span class="s2">,</span>
+                      <span class="s0">border: OutlineInputBorder(</span>
+                        <span class="s0">borderRadius: BorderRadius.circular(</span><span class="s4">10</span><span class="s0">)</span><span class="s2">,</span>
+                      <span class="s0">)</span><span class="s2">,</span>
+                    <span class="s0">)</span><span class="s2">,</span>
+                  <span class="s0">)</span><span class="s2">,</span>
+                  <span class="s2">const </span><span class="s0">SizedBox(height: </span><span class="s4">20</span><span class="s0">)</span><span class="s2">,</span>
+                  <span class="s2">const </span><span class="s0">Text(</span>
+                    <span class="s1">'Password'</span><span class="s2">,</span>
+                    <span class="s0">style: TextStyle(fontSize: </span><span class="s4">18</span><span class="s2">, </span><span class="s0">fontWeight: FontWeight.bold)</span><span class="s2">,</span>
+                  <span class="s0">)</span><span class="s2">,</span>
+                  <span class="s2">const </span><span class="s0">SizedBox(height: </span><span class="s4">10</span><span class="s0">)</span><span class="s2">,</span>
+                  <span class="s0">TextField(</span>
+                    <span class="s0">controller: passwordController</span><span class="s2">,</span>
+                    <span class="s0">decoration: InputDecoration(</span>
+                      <span class="s0">hintText: </span><span class="s1">'Enter your password'</span><span class="s2">,</span>
+                      <span class="s0">prefixIcon: </span><span class="s2">const </span><span class="s0">Icon(Icons.lock)</span><span class="s2">,</span>
+                      <span class="s0">border: OutlineInputBorder(</span>
+                        <span class="s0">borderRadius: BorderRadius.circular(</span><span class="s4">10</span><span class="s0">)</span><span class="s2">,</span>
+                      <span class="s0">)</span><span class="s2">,</span>
+                    <span class="s0">)</span><span class="s2">,</span>
+                    <span class="s0">obscureText: </span><span class="s2">true,</span>
+                  <span class="s0">)</span><span class="s2">,</span>
+                  <span class="s2">const </span><span class="s0">SizedBox(height: </span><span class="s4">20</span><span class="s0">)</span><span class="s2">,</span>
+                  <span class="s3">// Login Button</span>
+                  <span class="s0">SizedBox(</span>
+                    <span class="s0">width: double.infinity</span><span class="s2">,</span>
+                    <span class="s0">child: ElevatedButton(</span>
+                      <span class="s0">onPressed: () {</span>
+                        <span class="s0">String id = idController.text</span><span class="s2">;</span>
+                        <span class="s0">String password = passwordController.text</span><span class="s2">;</span>
+
+                        <span class="s3">// Validate login based on userType</span>
+                        <span class="s2">if </span><span class="s0">(widget.userType.toLowerCase() == </span><span class="s1">&quot;admin&quot; </span><span class="s0">&amp;&amp; id == </span><span class="s1">&quot;admin&quot; </span><span class="s0">&amp;&amp; password == </span><span class="s1">&quot;password&quot;</span><span class="s0">) {</span>
+                          <span class="s0">print(</span><span class="s1">&quot;Login Successful as Admin&quot;</span><span class="s0">)</span><span class="s2">;</span>
+                          <span class="s0">Navigator.push(</span>
+                            <span class="s0">context</span><span class="s2">,</span>
+                            <span class="s0">MaterialPageRoute(builder: (context) =&gt; </span><span class="s2">const </span><span class="s0">TodayScreen())</span><span class="s2">, </span><span class="s3">// Navigate to TodayScreen after successful login</span>
+                          <span class="s0">)</span><span class="s2">;</span>
+                        <span class="s0">} </span><span class="s2">else if </span><span class="s0">(widget.userType.toLowerCase() == </span><span class="s1">&quot;employee&quot; </span><span class="s0">&amp;&amp; id == </span><span class="s1">&quot;employee&quot; </span><span class="s0">&amp;&amp; password == </span><span class="s1">&quot;password&quot;</span><span class="s0">) {</span>
+                          <span class="s0">print(</span><span class="s1">&quot;Login Successful as Employee&quot;</span><span class="s0">)</span><span class="s2">;</span>
+                          <span class="s0">Navigator.push(</span>
+                            <span class="s0">context</span><span class="s2">,</span>
+                            <span class="s0">MaterialPageRoute(builder: (context) =&gt; </span><span class="s2">const </span><span class="s0">TodayScreen())</span><span class="s2">, </span><span class="s3">// Navigate to TodayScreen after successful login</span>
+                          <span class="s0">)</span><span class="s2">;</span>
+                        <span class="s0">} </span><span class="s2">else </span><span class="s0">{</span>
+                          <span class="s0">print(</span><span class="s1">&quot;Login Failed&quot;</span><span class="s0">)</span><span class="s2">;</span>
+                          <span class="s0">showDialog(</span>
+                            <span class="s0">context: context</span><span class="s2">,</span>
+                            <span class="s0">builder: (context) =&gt; </span><span class="s2">const </span><span class="s0">AlertDialog(</span>
+                              <span class="s0">title: Text(</span><span class="s1">'Login Failed'</span><span class="s0">)</span><span class="s2">,</span>
+                              <span class="s0">content: Text(</span><span class="s1">'Invalid ID or password'</span><span class="s0">)</span><span class="s2">,</span>
+                            <span class="s0">)</span><span class="s2">,</span>
+                          <span class="s0">)</span><span class="s2">;</span>
+                        <span class="s0">}</span>
+                      <span class="s0">}</span><span class="s2">,</span>
+                      <span class="s0">style: ElevatedButton.styleFrom(</span>
+                        <span class="s0">padding: </span><span class="s2">const </span><span class="s0">EdgeInsets.symmetric(vertical: </span><span class="s4">16</span><span class="s0">)</span><span class="s2">,</span>
+                        <span class="s0">shape: RoundedRectangleBorder(</span>
+                          <span class="s0">borderRadius: BorderRadius.circular(</span><span class="s4">10</span><span class="s0">)</span><span class="s2">,</span>
+                        <span class="s0">)</span><span class="s2">,</span>
+                        <span class="s0">backgroundColor: </span><span class="s2">const </span><span class="s0">Color(</span><span class="s4">0xFF4B3C31</span><span class="s0">)</span><span class="s2">,</span>
+                      <span class="s0">)</span><span class="s2">,</span>
+                      <span class="s0">child: </span><span class="s2">const </span><span class="s0">Text(</span>
+                        <span class="s1">'LOGIN'</span><span class="s2">,</span>
+                        <span class="s0">style: TextStyle(fontSize: </span><span class="s4">18</span><span class="s2">, </span><span class="s0">color: Colors.white)</span><span class="s2">,</span>
+                      <span class="s0">)</span><span class="s2">,</span>
+                    <span class="s0">)</span><span class="s2">,</span>
+                  <span class="s0">)</span><span class="s2">,</span>
+                <span class="s0">]</span><span class="s2">,</span>
+              <span class="s0">)</span><span class="s2">,</span>
+            <span class="s0">)</span><span class="s2">,</span>
+          <span class="s0">]</span><span class="s2">,</span>
+        <span class="s0">)</span><span class="s2">,</span>
+      <span class="s0">)</span><span class="s2">,</span>
+    <span class="s0">)</span><span class="s2">;</span>
+  <span class="s0">}</span>
+<span class="s0">}</span>
+
+<span class="s2">void </span><span class="s0">main() {</span>
+  <span class="s0">runApp(MaterialApp(</span>
+    <span class="s0">home: LoginPage(userType: </span><span class="s1">'admin'</span><span class="s0">)</span><span class="s2">, </span><span class="s3">// Pass userType to the LoginPage</span>
+    <span class="s0">debugShowCheckedModeBanner: </span><span class="s2">false,</span>
+  <span class="s0">))</span><span class="s2">;</span>
+<span class="s0">}</span>
+</pre>
+</body>
+</html>

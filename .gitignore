@@ -1,0 +1,8 @@
+.dart_tool/
+build/
+windows/flutter/ephemeral/
+android/.gradle/
+ios/Flutter/ephemeral/
+macos/Flutter/ephemeral/
+.vscode/
+.DS_Store

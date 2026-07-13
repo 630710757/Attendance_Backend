@@ -1,0 +1,213 @@
+<html>
+<head>
+<title>today_screen.dart</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #a9b7c6;}
+.s1 { color: #6a8759;}
+.s2 { color: #cc7832;}
+.s3 { color: #808080;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+today_screen.dart</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">'package:flutter/material.dart'</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">'package:slide_to_act/slide_to_act.dart'</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">'package:intl/intl.dart'</span><span class="s2">;</span>
+
+<span class="s2">class </span><span class="s0">TodayScreen </span><span class="s2">extends </span><span class="s0">StatefulWidget {</span>
+  <span class="s2">const </span><span class="s0">TodayScreen({Key? key}) : </span><span class="s2">super</span><span class="s0">(key: key)</span><span class="s2">;</span>
+
+  <span class="s0">@override</span>
+  <span class="s0">_TodayScreenState createState() =&gt; _TodayScreenState()</span><span class="s2">;</span>
+<span class="s0">}</span>
+
+<span class="s2">class </span><span class="s0">_TodayScreenState </span><span class="s2">extends </span><span class="s0">State&lt;TodayScreen&gt; {</span>
+  <span class="s0">String employeeId = </span><span class="s1">'E123'</span><span class="s2">; </span><span class="s3">// Employee ID</span>
+  <span class="s0">String checkInTime = </span><span class="s1">'--:--'</span><span class="s2">; </span><span class="s3">// Initial check-in time</span>
+  <span class="s0">String checkOutTime = </span><span class="s1">'--:--'</span><span class="s2">; </span><span class="s3">// Initial check-out time</span>
+  <span class="s0">bool isCheckedIn = </span><span class="s2">false; </span><span class="s3">// Check-in/check-out status</span>
+  <span class="s0">String currentDateTime = </span><span class="s1">''</span><span class="s2">; </span><span class="s3">// Current date and time</span>
+  <span class="s0">String workStatus = </span><span class="s1">'----'</span><span class="s2">; </span><span class="s3">// Initial work status</span>
+
+  <span class="s0">@override</span>
+  <span class="s2">void </span><span class="s0">initState() {</span>
+    <span class="s2">super</span><span class="s0">.initState()</span><span class="s2">;</span>
+    <span class="s0">currentDateTime = _getCurrentDateTime()</span><span class="s2">; </span><span class="s3">// Get current date and time</span>
+  <span class="s0">}</span>
+
+  <span class="s0">Future&lt;</span><span class="s2">void</span><span class="s0">&gt; toggleCheckInOut() async {</span>
+    <span class="s2">if </span><span class="s0">(!isCheckedIn) {</span>
+      <span class="s3">// If user is checking in</span>
+      <span class="s0">checkInTime = _getCurrentTime()</span><span class="s2">;</span>
+      <span class="s0">checkOutTime = </span><span class="s1">'--:--'</span><span class="s2">; </span><span class="s3">// Reset check-out time</span>
+      <span class="s0">isCheckedIn = </span><span class="s2">true; </span><span class="s3">// Update status to checked in</span>
+      <span class="s0">workStatus = _getWorkStatus()</span><span class="s2">; </span><span class="s3">// Update work status</span>
+    <span class="s0">} </span><span class="s2">else </span><span class="s0">{</span>
+      <span class="s3">// If user is checking out</span>
+      <span class="s2">if </span><span class="s0">(checkInTime == </span><span class="s1">'--:--'</span><span class="s0">) {</span>
+        <span class="s2">final </span><span class="s0">snackBar = SnackBar(</span>
+          <span class="s0">content: Text(</span><span class="s1">'You must check in before checking out!'</span><span class="s0">)</span><span class="s2">,</span>
+          <span class="s0">duration: </span><span class="s2">const </span><span class="s0">Duration(seconds: </span><span class="s4">2</span><span class="s0">)</span><span class="s2">,</span>
+        <span class="s0">)</span><span class="s2">;</span>
+        <span class="s0">ScaffoldMessenger.of(context).showSnackBar(snackBar)</span><span class="s2">;</span>
+        <span class="s2">return;</span>
+      <span class="s0">}</span>
+      <span class="s0">checkOutTime = _getCurrentTime()</span><span class="s2">;</span>
+      <span class="s0">isCheckedIn = </span><span class="s2">false; </span><span class="s3">// Update status to checked out</span>
+    <span class="s0">}</span>
+
+    <span class="s0">setState(() {})</span><span class="s2">;</span>
+
+    <span class="s3">// Show a SnackBar after check in/out</span>
+    <span class="s2">final </span><span class="s0">snackBar = SnackBar(</span>
+      <span class="s0">content: Text(isCheckedIn ? </span><span class="s1">'Checked In at </span><span class="s0">$checkInTime</span><span class="s1">' </span><span class="s0">: </span><span class="s1">'Checked Out at </span><span class="s0">$checkOutTime</span><span class="s1">'</span><span class="s0">)</span><span class="s2">,</span>
+      <span class="s0">duration: </span><span class="s2">const </span><span class="s0">Duration(seconds: </span><span class="s4">2</span><span class="s0">)</span><span class="s2">,</span>
+    <span class="s0">)</span><span class="s2">;</span>
+    <span class="s0">ScaffoldMessenger.of(context).showSnackBar(snackBar)</span><span class="s2">;</span>
+  <span class="s0">}</span>
+
+  <span class="s0">String _getCurrentTime() {</span>
+    <span class="s2">final </span><span class="s0">now = DateTime.now()</span><span class="s2">;</span>
+    <span class="s2">return </span><span class="s1">'</span><span class="s0">${now.hour.toString().padLeft(</span><span class="s4">2</span><span class="s2">, </span><span class="s1">'0'</span><span class="s0">)}</span><span class="s1">:</span><span class="s0">${now.minute.toString().padLeft(</span><span class="s4">2</span><span class="s2">, </span><span class="s1">'0'</span><span class="s0">)}</span><span class="s1">'</span><span class="s2">;</span>
+  <span class="s0">}</span>
+
+  <span class="s0">String _getCurrentDateTime() {</span>
+    <span class="s2">final </span><span class="s0">now = DateTime.now()</span><span class="s2">;</span>
+    <span class="s2">return </span><span class="s0">DateFormat(</span><span class="s1">'dd/MM/yyyy'</span><span class="s0">).format(now)</span><span class="s2">; </span><span class="s3">// Date format</span>
+  <span class="s0">}</span>
+
+  <span class="s0">String _getWorkStatus() {</span>
+    <span class="s2">final </span><span class="s0">checkInHour = DateTime.now().hour</span><span class="s2">;</span>
+    <span class="s2">final </span><span class="s0">checkInMinute = DateTime.now().minute</span><span class="s2">;</span>
+
+    <span class="s3">// Check if arrived before or after 8:30</span>
+    <span class="s2">if </span><span class="s0">(checkInHour &gt; </span><span class="s4">7 </span><span class="s0">|| (checkInHour == </span><span class="s4">8 </span><span class="s0">&amp;&amp; checkInMinute &lt; </span><span class="s4">30</span><span class="s0">)) {</span>
+      <span class="s2">return </span><span class="s1">'ปกติ'</span><span class="s2">; </span><span class="s3">// On time</span>
+    <span class="s0">} </span><span class="s2">else </span><span class="s0">{</span>
+      <span class="s2">return </span><span class="s1">'สาย'</span><span class="s2">; </span><span class="s3">// Late</span>
+    <span class="s0">}</span>
+  <span class="s0">}</span>
+
+  <span class="s0">@override</span>
+  <span class="s0">Widget build(BuildContext context) {</span>
+    <span class="s2">return </span><span class="s0">Scaffold(</span>
+      <span class="s0">backgroundColor: Colors.white</span><span class="s2">,</span>
+      <span class="s0">body: SingleChildScrollView(</span>
+        <span class="s0">child: Padding(</span>
+          <span class="s0">padding: </span><span class="s2">const </span><span class="s0">EdgeInsets.all(</span><span class="s4">16.0</span><span class="s0">)</span><span class="s2">,</span>
+          <span class="s0">child: Column(</span>
+            <span class="s0">crossAxisAlignment: CrossAxisAlignment.start</span><span class="s2">,</span>
+            <span class="s0">children: [</span>
+              <span class="s2">const </span><span class="s0">SizedBox(height: </span><span class="s4">20</span><span class="s0">)</span><span class="s2">,</span>
+              <span class="s3">// Employee Container</span>
+              <span class="s0">Container(</span>
+                <span class="s0">padding: </span><span class="s2">const </span><span class="s0">EdgeInsets.all(</span><span class="s4">16.0</span><span class="s0">)</span><span class="s2">,</span>
+                <span class="s0">color: </span><span class="s2">const </span><span class="s0">Color(</span><span class="s4">0xFFEAD8C9</span><span class="s0">)</span><span class="s2">, </span><span class="s3">// Background color</span>
+                <span class="s0">child: Row(</span>
+                  <span class="s0">mainAxisAlignment: MainAxisAlignment.spaceBetween</span><span class="s2">,</span>
+                  <span class="s0">children: [</span>
+                    <span class="s2">const </span><span class="s0">Text(</span>
+                      <span class="s1">'พนักงาน'</span><span class="s2">,</span>
+                      <span class="s0">style: TextStyle(</span>
+                        <span class="s0">fontSize: </span><span class="s4">24</span><span class="s2">,</span>
+                        <span class="s0">fontWeight: FontWeight.bold</span><span class="s2">,</span>
+                      <span class="s0">)</span><span class="s2">,</span>
+                    <span class="s0">)</span><span class="s2">,</span>
+                    <span class="s0">Image.asset(</span>
+                      <span class="s1">'assets/images/KobBlur.png'</span><span class="s2">, </span><span class="s3">// Adjust the path if needed</span>
+                      <span class="s0">width: </span><span class="s4">60</span><span class="s2">,</span>
+                      <span class="s0">height: </span><span class="s4">60</span><span class="s2">,</span>
+                      <span class="s0">fit: BoxFit.cover</span><span class="s2">,</span>
+                    <span class="s0">)</span>
+                  <span class="s0">]</span><span class="s2">,</span>
+                <span class="s0">)</span><span class="s2">,</span>
+              <span class="s0">)</span><span class="s2">,</span>
+              <span class="s2">const </span><span class="s0">SizedBox(height: </span><span class="s4">20</span><span class="s0">)</span><span class="s2">,</span>
+              <span class="s3">// Information Container</span>
+              <span class="s0">Container(</span>
+                <span class="s0">padding: </span><span class="s2">const </span><span class="s0">EdgeInsets.all(</span><span class="s4">16.0</span><span class="s0">)</span><span class="s2">,</span>
+                <span class="s0">decoration: BoxDecoration(</span>
+                  <span class="s0">color: </span><span class="s2">const </span><span class="s0">Color(</span><span class="s4">0xFFD9BA9F</span><span class="s0">)</span><span class="s2">,</span>
+                  <span class="s0">borderRadius: BorderRadius.circular(</span><span class="s4">10</span><span class="s0">)</span><span class="s2">,</span>
+                  <span class="s0">border: Border.all(color: Colors.grey</span><span class="s2">, </span><span class="s0">width: </span><span class="s4">1</span><span class="s0">)</span><span class="s2">,</span>
+                  <span class="s0">boxShadow: [</span>
+                    <span class="s0">BoxShadow(</span>
+                      <span class="s0">color: Colors.grey.withOpacity(</span><span class="s4">0.3</span><span class="s0">)</span><span class="s2">,</span>
+                      <span class="s0">spreadRadius: </span><span class="s4">5</span><span class="s2">,</span>
+                      <span class="s0">blurRadius: </span><span class="s4">10</span><span class="s2">,</span>
+                    <span class="s0">)</span><span class="s2">,</span>
+                  <span class="s0">]</span><span class="s2">,</span>
+                <span class="s0">)</span><span class="s2">,</span>
+                <span class="s0">child: Column(</span>
+                  <span class="s0">crossAxisAlignment: CrossAxisAlignment.start</span><span class="s2">,</span>
+                  <span class="s0">children: [</span>
+                    <span class="s0">Row(</span>
+                      <span class="s0">mainAxisAlignment: MainAxisAlignment.spaceBetween</span><span class="s2">,</span>
+                      <span class="s0">children: [</span>
+                        <span class="s2">const </span><span class="s0">Text(</span><span class="s1">'วันที่:'</span><span class="s2">, </span><span class="s0">style: TextStyle(fontSize: </span><span class="s4">16</span><span class="s2">, </span><span class="s0">fontWeight: FontWeight.bold))</span><span class="s2">,</span>
+                        <span class="s0">Text(currentDateTime</span><span class="s2">, </span><span class="s0">style: </span><span class="s2">const </span><span class="s0">TextStyle(fontSize: </span><span class="s4">16</span><span class="s0">))</span><span class="s2">,</span>
+                      <span class="s0">]</span><span class="s2">,</span>
+                    <span class="s0">)</span><span class="s2">,</span>
+                    <span class="s2">const </span><span class="s0">SizedBox(height: </span><span class="s4">10</span><span class="s0">)</span><span class="s2">,</span>
+                    <span class="s0">Row(</span>
+                      <span class="s0">mainAxisAlignment: MainAxisAlignment.spaceBetween</span><span class="s2">,</span>
+                      <span class="s0">children: [</span>
+                        <span class="s2">const </span><span class="s0">Text(</span><span class="s1">'รหัสพนักงาน:'</span><span class="s2">, </span><span class="s0">style: TextStyle(fontSize: </span><span class="s4">16</span><span class="s2">, </span><span class="s0">fontWeight: FontWeight.bold))</span><span class="s2">,</span>
+                        <span class="s0">Text(employeeId</span><span class="s2">, </span><span class="s0">style: </span><span class="s2">const </span><span class="s0">TextStyle(fontSize: </span><span class="s4">16</span><span class="s0">))</span><span class="s2">,</span>
+                      <span class="s0">]</span><span class="s2">,</span>
+                    <span class="s0">)</span><span class="s2">,</span>
+                    <span class="s2">const </span><span class="s0">SizedBox(height: </span><span class="s4">10</span><span class="s0">)</span><span class="s2">,</span>
+                    <span class="s0">Row(</span>
+                      <span class="s0">mainAxisAlignment: MainAxisAlignment.spaceBetween</span><span class="s2">,</span>
+                      <span class="s0">children: [</span>
+                        <span class="s2">const </span><span class="s0">Text(</span><span class="s1">'เวลาเข้าทำงาน:'</span><span class="s2">, </span><span class="s0">style: TextStyle(fontSize: </span><span class="s4">16</span><span class="s2">, </span><span class="s0">fontWeight: FontWeight.bold))</span><span class="s2">,</span>
+                        <span class="s0">Text(checkInTime</span><span class="s2">, </span><span class="s0">style: </span><span class="s2">const </span><span class="s0">TextStyle(fontSize: </span><span class="s4">16</span><span class="s0">))</span><span class="s2">,</span>
+                      <span class="s0">]</span><span class="s2">,</span>
+                    <span class="s0">)</span><span class="s2">,</span>
+                    <span class="s2">const </span><span class="s0">SizedBox(height: </span><span class="s4">10</span><span class="s0">)</span><span class="s2">,</span>
+                    <span class="s0">Row(</span>
+                      <span class="s0">mainAxisAlignment: MainAxisAlignment.spaceBetween</span><span class="s2">,</span>
+                      <span class="s0">children: [</span>
+                        <span class="s2">const </span><span class="s0">Text(</span><span class="s1">'เวลาออกงาน:'</span><span class="s2">, </span><span class="s0">style: TextStyle(fontSize: </span><span class="s4">16</span><span class="s2">, </span><span class="s0">fontWeight: FontWeight.bold))</span><span class="s2">,</span>
+                        <span class="s0">Text(checkOutTime</span><span class="s2">, </span><span class="s0">style: </span><span class="s2">const </span><span class="s0">TextStyle(fontSize: </span><span class="s4">16</span><span class="s0">))</span><span class="s2">,</span>
+                      <span class="s0">]</span><span class="s2">,</span>
+                    <span class="s0">)</span><span class="s2">,</span>
+                    <span class="s2">const </span><span class="s0">SizedBox(height: </span><span class="s4">10</span><span class="s0">)</span><span class="s2">,</span>
+                    <span class="s0">Row(</span>
+                      <span class="s0">mainAxisAlignment: MainAxisAlignment.spaceBetween</span><span class="s2">,</span>
+                      <span class="s0">children: [</span>
+                        <span class="s2">const </span><span class="s0">Text(</span><span class="s1">'สถานะ:'</span><span class="s2">, </span><span class="s0">style: TextStyle(fontSize: </span><span class="s4">16</span><span class="s2">, </span><span class="s0">fontWeight: FontWeight.bold))</span><span class="s2">,</span>
+                        <span class="s0">Text(workStatus</span><span class="s2">, </span><span class="s0">style: </span><span class="s2">const </span><span class="s0">TextStyle(fontSize: </span><span class="s4">16</span><span class="s0">))</span><span class="s2">,</span>
+                      <span class="s0">]</span><span class="s2">,</span>
+                    <span class="s0">)</span><span class="s2">,</span>
+                  <span class="s0">]</span><span class="s2">,</span>
+                <span class="s0">)</span><span class="s2">,</span>
+              <span class="s0">)</span><span class="s2">,</span>
+              <span class="s2">const </span><span class="s0">SizedBox(height: </span><span class="s4">30</span><span class="s0">)</span><span class="s2">,</span>
+              <span class="s3">// Slide Action for Check In/Out</span>
+              <span class="s0">Container(</span>
+                <span class="s0">margin: </span><span class="s2">const </span><span class="s0">EdgeInsets.only(top: </span><span class="s4">32</span><span class="s0">)</span><span class="s2">,</span>
+                <span class="s0">child: SlideAction(</span>
+                  <span class="s0">text: isCheckedIn ? </span><span class="s1">'Slide to Check Out' </span><span class="s0">: </span><span class="s1">'Slide to Check In'</span><span class="s2">,</span>
+                  <span class="s0">textStyle: </span><span class="s2">const </span><span class="s0">TextStyle(color: Colors.black</span><span class="s2">, </span><span class="s0">fontSize: </span><span class="s4">16</span><span class="s2">, </span><span class="s0">fontWeight: FontWeight.bold)</span><span class="s2">,</span>
+                  <span class="s0">onSubmit: toggleCheckInOut</span><span class="s2">,</span>
+                  <span class="s0">innerColor: isCheckedIn ? Colors.red : Colors.green</span><span class="s2">,</span>
+                  <span class="s0">outerColor: Colors.white</span><span class="s2">,</span>
+                <span class="s0">)</span><span class="s2">,</span>
+              <span class="s0">)</span><span class="s2">,</span>
+            <span class="s0">]</span><span class="s2">,</span>
+          <span class="s0">)</span><span class="s2">,</span>
+        <span class="s0">)</span><span class="s2">,</span>
+      <span class="s0">)</span><span class="s2">,</span>
+    <span class="s0">)</span><span class="s2">;</span>
+  <span class="s0">}</span>
+<span class="s0">}</span>
+</pre>
+</body>
+</html>
